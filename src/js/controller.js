@@ -17,6 +17,8 @@ const recipesControl = async function () {
     RecipeView.renderSpinner();
     await modal.loadRecipe(id);
     RecipeView.render(modal.state.recipe);
+  
+
   } catch (err) {
     RecipeView.errorRender();
   }
@@ -46,6 +48,7 @@ const paginationControl=function(gotoPage){
 
 const updateServingsControl=function(newServings){
     modal.updateServings(newServings);
+    RecipeView.render(modal.state.recipe);
 }
 
 const init = function () {

@@ -7,19 +7,19 @@ class RecipeView extends View {
   _parentElement = document.querySelector('.recipe');
   _errorMessage = 'No recipes found for your query. Please try again!';
   _successMessage = '';
-  _servingsValue = document.querySelector('.recipe__info-data--people');
 
   addHandlerRender(handler) {
     ['hashchange', 'load'].map(el => window.addEventListener(el, handler));
   }
 
   addHandlerUpdateServings(handler) {
-    const servings=this._servingsValue
-    console.log(servings);
     this._parentElement.addEventListener('click', function (e) {
-      const btn = e.target.closest('.btn--tiny');
+      const btn = e.target.closest('.btn--increase-servings');
       if (!btn) return;
-      console.log(servings);
+
+      const updateTo = +btn.dataset.serveTo;
+      if (updateTo <= 0 || updateTo >= 10) return;
+      handler(updateTo);
     });
   }
 
@@ -53,12 +53,16 @@ class RecipeView extends View {
           <span class="recipe__info-text">servings</span>
 
           <div class="recipe__info-buttons">
-            <button class="btn--tiny btn--increase-servings">
+            <button class="btn--tiny btn--increase-servings " data-serve-to="${
+              this._data.servings - 1
+            }">
               <svg>
                 <use href="${icons}#icon-minus-circle"></use>
               </svg>
             </button>
-            <button class="btn--tiny btn--increase-servings">
+            <button class="btn--tiny btn--increase-servings" data-serve-to="${
+              this._data.servings + 1
+            }">
               <svg>
                 <use href="${icons}#icon-plus-circle"></use>
               </svg>
