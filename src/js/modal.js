@@ -6,7 +6,7 @@ const state = {
   search: {
     query: '',
     results: [],
-    page: 2,
+    page: 1,
     resultsPerPage: RES_PER_PAGE,
   },
 };
@@ -34,6 +34,7 @@ export const loadRecipe = async function (id) {
 
 export const searchRecipe = async function (query) {
   try {
+    state.search.page=1;
     const data = await getJson(`${API_URL}?search=${query}`);
 
     state.search.results = data.data.recipes.map(rec => {
